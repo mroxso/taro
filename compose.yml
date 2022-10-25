@@ -1,0 +1,38 @@
+version: '3'
+services:
+  lnd:
+    #image: lightninglabs/lnd:v0.15.3-beta
+    image: ghcr.io/mroxso/lnd:master
+    container_name: lnd
+    restart: always
+    volumes:
+      - ~/.lnd:/root/.lnd
+    ports:
+      - "9735:9735/tcp"
+      - "10009:10009/tcp"
+    command:
+      --bitcoin.active
+      --bitcoin.testnet
+      --bitcoin.node=neutrino
+      --rpclisten=0.0.0.0
+      --tlsextradomain=lnd
+      --neutrino.connect=faucet.lightning.community
+      --neutrino.connect=btcd-testnet.lightning.computer
+      --neutrino.connect=testnet1-btcd.zaphq.io
+  taro:
+    #image: ghcr.io/mroxso/taro:master
+    build: .
+    container_name: taro
+    restart: always
+    volumes:
+      - ~/.lnd:/root/.lnd:ro
+      - ~/.taro:/root/.taro
+    ports:
+      - "8089:8089"
+      - "10029:10029"
+    command:
+      --network=testnet
+      --debuglevel=debug
+      --lnd.host=lnd:10009
+      --lnd.macaroonpath=/root/.lnd/data/chain/bitcoin/testnet/admin.macaroon
+      --lnd.tlspath=/root/.lnd/tls.cert
