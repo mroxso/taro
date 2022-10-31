@@ -16,7 +16,6 @@ services:
       --bitcoin.node=neutrino
       --rpclisten=0.0.0.0
       --tlsextradomain=lnd
-      --tlsextradomain=lnd
       --neutrino.connect=faucet.lightning.community
       --neutrino.connect=btcd-testnet.lightning.computer
       --neutrino.connect=testnet1-btcd.zaphq.io
