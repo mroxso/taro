@@ -6,7 +6,7 @@ services:
     container_name: lnd
     restart: always
     volumes:
-      - ~/.lnd:/root/.lnd
+      - ~/.lnd:/home/lnd/.lnd
     ports:
       - "9735:9735/tcp"
       - "10009:10009/tcp"
@@ -15,6 +15,7 @@ services:
       --bitcoin.testnet
       --bitcoin.node=neutrino
       --rpclisten=0.0.0.0
+      --tlsextradomain=lnd
       --tlsextradomain=lnd
       --neutrino.connect=faucet.lightning.community
       --neutrino.connect=btcd-testnet.lightning.computer
